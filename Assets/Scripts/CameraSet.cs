@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class CameraSet : MonoBehaviour
 {
-    Camera camera;
+    Camera _camera;
 
     void Start()
     {
-        camera = GetComponent<Camera>();
+        _camera = GetComponent<Camera>();
     }
 
     void Update()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if(camera.fieldOfView > 15)
+            if(_camera.fieldOfView > 15)
             {
-                camera.fieldOfView--;
+                _camera.fieldOfView--;
             }
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (camera.fieldOfView < 60)
+            if (_camera.fieldOfView < 60)
             {
-                camera.fieldOfView++;
+                _camera.fieldOfView++;
             }
         }
 

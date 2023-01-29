@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace WarriorAnimsFREE
+namespace WarriorAnims
 {
 	public class AnimatorParentMove:MonoBehaviour
 	{

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace WarriorAnimsFREE
+namespace WarriorAnims
 {
 	public class IKHands:MonoBehaviour
 	{
@@ -37,9 +37,6 @@ namespace WarriorAnimsFREE
 			}
 		}
 
-		/// <summary>
-		/// Smoothly blend IK on and off so there's no snapping into position.
-		/// </summary>
 		public void BlendIK(bool blendOn, float delay, float timeToBlend)
 		{
 			StopAllCoroutines();
@@ -47,6 +44,9 @@ namespace WarriorAnimsFREE
 			co = StartCoroutine(_BlendIK(blendOn, delay, timeToBlend));
 		}
 
+		/// <summary>
+		/// Smoothly blend IK on and off so there's no snapping into position.
+		/// </summary>
 		private IEnumerator _BlendIK(bool blendOn, float delay, float timeToBlend)
 		{
 			if (canBeUsed) {
@@ -66,9 +66,6 @@ namespace WarriorAnimsFREE
 			}
 		}
 
-		/// <summary>
-		/// Pauses IK while Warrior uses Left Hand during an animation.
-		/// </summary>
 		public void SetIKPause(float pauseTime)
 		{
 			StopAllCoroutines();
@@ -76,6 +73,9 @@ namespace WarriorAnimsFREE
 			co = StartCoroutine(_SetIKPause(pauseTime));
 		}
 
+		/// <summary>
+		/// Pauses IK while Warrior uses Left Hand during an animation.
+		/// </summary>
 		private IEnumerator _SetIKPause(float pauseTime)
 		{
 			if (canBeUsed) {

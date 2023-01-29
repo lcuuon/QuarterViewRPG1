@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace WarriorAnimsFREE
+namespace WarriorAnims
 {
     public class WarriorCharacterAnimatorEvents:MonoBehaviour
     {
@@ -40,6 +40,14 @@ namespace WarriorAnimsFREE
 		public void Shoot()
 		{
 			OnShoot.Invoke();
+		}
+
+		/// <summary>
+		/// Checked when switching weapons to know when to turn on/off weapon models.
+		/// </summary>
+		public void WeaponSwitch()
+		{
+			warriorController.waitingOnWeapons = false;
 		}
 	}
 }

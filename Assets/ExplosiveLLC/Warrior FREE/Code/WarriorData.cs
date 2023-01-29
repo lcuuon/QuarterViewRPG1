@@ -1,4 +1,4 @@
-﻿namespace WarriorAnimsFREE
+﻿namespace WarriorAnims
 {
 	/// <summary>
 	/// The type of Warrior.  Determines which animations can play, and the 
@@ -28,7 +28,9 @@
 		Idle = 0,
 		Move = 1,
 		Jump = 2,
-		Fall = 3
+		DoubleJump = 3,
+		Fall = 4,
+		Block = 5,
 	}
 
 	/// <summary>
@@ -36,7 +38,22 @@
 	/// </summary>
 	public enum AnimatorTrigger
 	{
+		NoTrigger = 0,
 		JumpTrigger = 1,
-		AttackTrigger = 2
+		ActionTrigger = 2,
+		DashTrigger = 3,
+		AttackTrigger = 4,
+		JumpAttackTrigger = 5,
+		DeathTrigger = 6,
+		ReviveTrigger = 7,
+		LightHitTrigger = 8,
+		RollTrigger = 9,
+		AttackSpecialTrigger = 10,
+		AttackMoveTrigger = 11,
+		AttackRanged = 12,
+		BlockBreakTrigger = 13,
+		ReloadTrigger = 14,
+		WeaponSwitchTrigger = 15,
+		BlockTrigger = 16
 	}
 }

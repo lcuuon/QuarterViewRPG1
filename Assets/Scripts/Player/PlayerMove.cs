@@ -14,10 +14,18 @@ public class PlayerMove : MonoBehaviour
     //Basic AttackSpeed
     [SerializeField] private float attackSpeed;
 
+    //Current curser position
+    public Vector3 curPointerPos;
+
+    //Skill
+    public bool isdash;
+    public bool dashError;
+
     //skill cooldown check
     public int comboCount;
     public bool basicAttack1;
     public bool basicAttack2 = false;
+    public bool canDash;
 
     //MoveLimit
     public bool canMove;
@@ -32,6 +40,7 @@ public class PlayerMove : MonoBehaviour
     {
         basicAttack1 = true;
         canMove = true;
+        canDash = true;
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
@@ -42,10 +51,45 @@ public class PlayerMove : MonoBehaviour
     {
         ParentOb.transform.position = transform.position;
 
+        anim.SetFloat("AttackSpeed", attackSpeed);
+
         if (nav.velocity.magnitude <= 1)
         {
-            
             anim.SetBool("ismove", false);
+        }
+
+        //Dash
+        if (canDash)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                basicAttack1 = false;
+                basicAttack2 = false;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                canMove = false;
+
+                RaycastHit hit;
+
+                isdash = true;
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+
+                    curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
+                    nav.SetDestination(transform.position);
+                    transform.LookAt(curPointerPos);
+                    anim.CrossFade("DashForward", 0f);
+                    Vector3 DashDir = transform.localRotation * Vector3.forward;
+                    rb.velocity = DashDir * 30;
+                    Invoke("StopDash", 0.3f);
+
+                }
+            }
+        }
+        if (isdash)
+        {
+            nav.SetDestination(transform.position);
+            transform.LookAt(curPointerPos);
         }
 
         //Moveping Control
@@ -85,16 +129,20 @@ public class PlayerMove : MonoBehaviour
 
         //BasicAttack
         if (Input.GetMouseButtonDown(0))
-        {          
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
+
+            //MoveLimit
             canMove = false;
+            canDash = false;
 
             if (Physics.Raycast(ray, out hit, 100))
             {
+                curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
                 nav.SetDestination(transform.position);
-                transform.LookAt(new Vector3(hit.point.x, 0, hit.point.z));
+                transform.LookAt(curPointerPos);
                 if (basicAttack1)
                 {
                     comboCount = 1;
@@ -105,15 +153,39 @@ public class PlayerMove : MonoBehaviour
                 else if (basicAttack2)
                 {
                     comboCount = 2;
+
                 }
             }
         }
+        if (dashError)
+        {
+            Invoke("ErrorFix", (0.867f / attackSpeed) * 0.45f);
+            dashError = false;
+        }
+    }
+    
+    //ErrorFix
+    private void ErrorFix()
+    {
+        if (dashError == true)
+        {
+            Debug.Log("Error");
+            dashError = false;
+            basicAttack1 = true;
+            basicAttack2 = false;
+            canMove = true;
+        }
     }
 
-
-
-
-
+    //StopDash
+    private void StopDash()
+    {
+        rb.velocity = Vector3.zero;
+        isdash = false;
+        canMove = true;
+        basicAttack1 = true;
+        basicAttack2 = false;
+    }
 
 
     //MovePing Instance

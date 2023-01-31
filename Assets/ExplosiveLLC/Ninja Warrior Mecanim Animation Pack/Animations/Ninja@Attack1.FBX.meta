@@ -455,7 +455,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.38873616
-        functionName: BasicAttackEnd
+        functionName: BasicAttack2End
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -62,6 +62,7 @@ public class Enemy : MonoBehaviour
         if (isknockback)
         {
             nav.SetDestination(transform.position);
+            
         }
     }
 
@@ -72,11 +73,14 @@ public class Enemy : MonoBehaviour
         isknockback = true;
         rb.velocity = knockbackDir;
         Invoke("KnockbackEnd", 0.2f);
+        anim.SetBool("canMove", false);
+        anim.CrossFade("Fall", 0f);
     }
     private void KnockbackEnd()
     {
         canMove = true;
         isknockback = false;
         rb.velocity = Vector3.zero;
+        anim.SetBool("canMove", true);
     }
 }

@@ -25,29 +25,41 @@ public class PlayerAnimation : MonoBehaviour
     //ComboAttack Animation
     private void BasicAttackCombo()
     {
+        Debug.Log(player.comboCount);
         if (player.comboCount == 2)
         {
             anim.SetBool("isBasicAttack2", true);
         }
-        else
+        if (player.comboCount == 1)
         {
+            Debug.Log("bb");
             player.comboCount = 1;
             player.basicAttack1 = true;
             player.basicAttack2 = false;
-            player.canMove = true;
+            //player.canMove = true;
+            player.canBasicAttack = false;
         }
     }
-    private void BasicAttackEnd()
+    private void BasicAttack2End()
     {
+
         Debug.Log("noError");
         player.dashError = false;
         anim.SetBool("isBasicAttack2", false);
-        player.comboCount = 1;
+        player.canDash = true;
         player.basicAttack1 = true;
         player.basicAttack2 = false;
-        player.canMove = true;
-        player.canDash = true;
 
+        player.comboCount = 1;
+        player.canBasicAttack = true;
+        player.canMove = true;
+
+    }
+    private void BasicAttack1End()
+    {
+        player.comboCount = 1;
+        player.canBasicAttack = true;
+        player.canMove = true;
     }
     private void AttackMove()
     {
@@ -77,6 +89,7 @@ public class PlayerAnimation : MonoBehaviour
     }
     private void CheckDeshError()
     {
+        //Debug.Log("aa");
         player.dashError = true;
     }
 }

@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     public bool basicAttack1;
     public bool basicAttack2 = false;
     public bool canDash;
+    public bool canBasicAttack;
 
     //MoveLimit
     public bool canMove;
@@ -38,6 +39,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        canBasicAttack = true;
         basicAttack1 = true;
         canMove = true;
         canDash = true;
@@ -128,40 +130,44 @@ public class PlayerMove : MonoBehaviour
         }
 
         //BasicAttack
-        if (Input.GetMouseButtonDown(0))
+        if (canBasicAttack)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit;
-
-            //MoveLimit
-            canMove = false;
-            canDash = false;
-
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Input.GetMouseButtonDown(0))
             {
-                curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
-                nav.SetDestination(transform.position);
-                transform.LookAt(curPointerPos);
-                if (basicAttack1)
-                {
-                    comboCount = 1;
-                    anim.CrossFade("Attack2", 0f);
-                    basicAttack1 = false;
-                    basicAttack2 = true;
-                }
-                else if (basicAttack2)
-                {
-                    comboCount = 2;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+                RaycastHit hit;
+
+                //MoveLimit
+                canMove = false;
+                canDash = false;
+
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+                    curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
+                    nav.SetDestination(transform.position);
+                    transform.LookAt(curPointerPos);
+                    if (basicAttack1)
+                    {
+                        comboCount = 1;
+                        anim.CrossFade("Attack2", 0f);
+                        basicAttack1 = false;
+                        basicAttack2 = true;
+                    }
+                    else if (basicAttack2)
+                    {
+                        comboCount = 2;
+
+                    }
                 }
             }
+            //if (dashError)
+            //{
+            //    Invoke("ErrorFix", (0.867f / attackSpeed) * 0.45f);
+            //    dashError = false;
+            //}
         }
-        if (dashError)
-        {
-            Invoke("ErrorFix", (0.867f / attackSpeed) * 0.45f);
-            dashError = false;
-        }
+        
     }
     
     //ErrorFix

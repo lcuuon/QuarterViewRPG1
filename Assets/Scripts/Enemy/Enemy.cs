@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent nav;
     private Animator anim;
     Rigidbody rb;
+    [SerializeField] EnemyHPbar hpbar;
 
     //Info
     public float HP;
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        hpbar.enemyPos = this.transform;
         canMove = true;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();

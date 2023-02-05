@@ -42,6 +42,10 @@ public class EnemyRange : MonoBehaviour
                 enemy.isAggro = false;
             }
         }
+        else
+        {
+            
+        }
     }
 
     private void OnTriggerExit(Collider other)

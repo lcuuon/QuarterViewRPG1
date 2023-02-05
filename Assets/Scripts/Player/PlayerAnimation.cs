@@ -9,8 +9,17 @@ public class PlayerAnimation : MonoBehaviour
     Rigidbody rb;
     [SerializeField] GameObject basicAttack;
 
+    //Skill Effect
+    [SerializeField] GameObject[] Effect;
+    private int combonum;
+
     void Start()
     {
+        combonum = 0;
+        for (int i = 0; i < Effect.Length; i++)
+        {
+            Effect[i].SetActive(false);
+        }
         anim = GetComponent<Animator>();
         player = GetComponentInParent<PlayerMove>();
         rb = GetComponentInParent<Rigidbody>();
@@ -42,7 +51,7 @@ public class PlayerAnimation : MonoBehaviour
     }
     private void BasicAttack2End()
     {
-
+        combonum = 0;
         Debug.Log("noError");
         player.dashError = false;
         anim.SetBool("isBasicAttack2", false);
@@ -75,10 +84,13 @@ public class PlayerAnimation : MonoBehaviour
     }
     private void AttackStart()
     {
+        Effect[combonum].SetActive(true);
         basicAttack.SetActive(true);
     }
     private void AttackEnd()
     {
+        Effect[0].SetActive(false);
+        Effect[1].SetActive(false);
         basicAttack.SetActive(false);
     }
 
@@ -89,7 +101,7 @@ public class PlayerAnimation : MonoBehaviour
     }
     private void CheckDeshError()
     {
-        //Debug.Log("aa");
+        combonum = 1;
         player.dashError = true;
     }
 }

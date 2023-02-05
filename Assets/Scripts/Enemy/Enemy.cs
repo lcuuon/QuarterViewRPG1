@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("isRun", false);
                 nav.SetDestination(transform.position);
             }
-            else if (isAggro || !isAttack)
+            else if (isAggro && !isAttack)
             {
                 anim.SetBool("isRun", true);
                 anim.SetBool("isAttack", false);

@@ -2,19 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
-    
-    
+
+    [Header("Prefeb and component")]
     [SerializeField] GameObject ParentOb;
     [SerializeField] GameObject moveping;
-
+    [SerializeField] Slider hpSlider;
+    [SerializeField] SkillCoolTime skill;
+    private Animator movePingAnim;
+    private Rigidbody rb;
+    private Animator anim;
+    private NavMeshAgent nav;
 
     //Basic AttackSpeed
+    [Header("Info")]
     [SerializeField] private float attackSpeed;
+    [SerializeField] float PlayerMaxHP;
+    public float PlayerCurHP;
 
     //Current curser position
+    [Header("Other")]
     public Vector3 curPointerPos;
 
     //Skill
@@ -32,13 +42,12 @@ public class PlayerMove : MonoBehaviour
     public bool canMove;
 
     //Component
-    private Animator movePingAnim;
-    private Rigidbody rb;
-    private Animator anim;
-    private NavMeshAgent nav;
+    
 
     void Start()
     {
+        PlayerCurHP = PlayerMaxHP;
+        hpSlider.maxValue = PlayerMaxHP;
         canBasicAttack = true;
         basicAttack1 = true;
         canMove = true;
@@ -51,6 +60,8 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        hpSlider.value = PlayerCurHP;
+
         ParentOb.transform.position = transform.position;
 
         anim.SetFloat("AttackSpeed", attackSpeed);
@@ -65,6 +76,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                skill.Trigger_Skill();
                 basicAttack1 = false;
                 basicAttack2 = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

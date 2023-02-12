@@ -8,11 +8,9 @@ public class AttackInfo : MonoBehaviour
     Rigidbody enemyrb;
     PlayerMove player;
 
-    [SerializeField] float Damage;
+    [SerializeField] public float Damage;
     [SerializeField] float castingTime;
-    [SerializeField] bool isKnockback;
     [SerializeField] float KnockbackRange;
-    [SerializeField] bool isStern;
     [SerializeField] float SternTime;
 
     void Start()
@@ -29,9 +27,8 @@ public class AttackInfo : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("Damage");
+            //Debug.Log("Damage");
             enemy = other.GetComponent<Enemy>();
-            enemy.HP -= Damage;
             enemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
         }
     }

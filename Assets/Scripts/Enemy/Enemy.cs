@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 
 public class Enemy : MonoBehaviour
@@ -15,11 +16,20 @@ public class Enemy : MonoBehaviour
     public GameObject player;
     private NavMeshAgent nav;
     private Animator anim;
+    private CapsuleCollider collider;
     Rigidbody rb;
-    [SerializeField] EnemyHPbar hpbar;
+    [SerializeField] GameObject attack;
+
+    //HP Bar
+    [SerializeField] Canvas hpBarCanvas;
+    [SerializeField] GameObject hpBarPrefeb;
+    [SerializeField] Slider hpBarSlider;
+    private bool setHpBar;
 
     //Info
-    public float HP;
+    public float MaxHP;
+    public float curHP;
+    private bool isDeath;
 
     //CC
     private bool isknockback;
@@ -27,51 +37,121 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        hpbar.enemyPos = this.transform;
+        attack.SetActive(false);
         canMove = true;
+        curHP = MaxHP;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
     }
 
     void Update()
     {
-        if (canMove)
+        if (!isDeath)
         {
-            if (isAttack)
+            if (curHP <= 0)
             {
-                transform.LookAt(player.transform.position);
-                anim.SetBool("isAttack", true);
-                anim.SetBool("isRun", false);
-                nav.SetDestination(transform.position);
+                Death();
             }
-            else if (isAggro && !isAttack)
+
+            if (setHpBar)
             {
-                anim.SetBool("isRun", true);
-                anim.SetBool("isAttack", false);
-                nav.SetDestination(player.transform.position);
+                hpBarSlider.value = curHP;
             }
-            if (!isAggro && !isAttack)
+
+            if (canMove)
             {
-                anim.SetBool("isAttack", false);
-                anim.SetBool("isRun", false);
+                if (isAttack)
+                {
+                    transform.LookAt(player.transform.position);
+                    anim.SetBool("isAttack", true);
+                    anim.SetBool("isRun", false);
+                    nav.SetDestination(transform.position);
+                }
+                else if (isAggro && !isAttack)
+                {
+                    anim.SetBool("isRun", true);
+                    anim.SetBool("isAttack", false);
+                    nav.SetDestination(player.transform.position);
+                }
+                if (!isAggro && !isAttack)
+                {
+                    anim.SetBool("isAttack", false);
+                    anim.SetBool("isRun", false);
+                    nav.SetDestination(transform.position);
+
+                }
+            }
+
+
+            if (isknockback)
+            {
                 nav.SetDestination(transform.position);
 
             }
-        }
-        
-
-        if (isknockback)
-        {
-            nav.SetDestination(transform.position);
-            
         }
     }
 
+    //Attack
+    private void AttackStart()
+    {
+        attack.SetActive(true);
+    }
+    private void AttackEnd()
+    {
+        attack.SetActive(false);
+    }
+
+    //Death
+    private void Death()
+    {
+        isDeath = true;
+        canMove = false;
+        nav.enabled = false;
+        collider.enabled = false;
+        isknockback = false;
+        isAggro = false;
+        isAttack = false;
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isRun", false);
+        anim.CrossFade("Death", 0f);
+        Invoke("Destroy", 15f);
+    }
+
+    private void Destroy()
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void Deathoffset1()
+    {
+        transform.position = new Vector3(transform.position.x, -1.57f, transform.position.z);
+
+    }
+
+    private void Deathoffset2()
+    {
+        transform.position = new Vector3(transform.position.x, -2.57f, transform.position.z);
+    }
+
+    //Set HPbar
+    private void SetHPBar()
+    {
+        GameObject hpbar = Instantiate(hpBarPrefeb, hpBarCanvas.transform);
+        hpBarSlider = hpbar.GetComponent<Slider>();
+        hpBarSlider.maxValue = MaxHP;
+        
+        var _hpbar = hpbar.GetComponent<EnemyHPbar>();
+        _hpbar.enemyPos = this.transform;
+    }
+
+
+    //Knockback
     public void Knockback(Vector3 knockbackDir)
     {
         canMove = false;
-        Debug.Log("Damage");
+        //Debug.Log("Damage");
         isknockback = true;
         rb.velocity = knockbackDir;
         Invoke("KnockbackEnd", 0.2f);
@@ -85,4 +165,20 @@ public class Enemy : MonoBehaviour
         rb.velocity = Vector3.zero;
         anim.SetBool("canMove", true);
     }
+
+    //Collision
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Attack")
+        {
+            AttackInfo attackInfo = other.gameObject.GetComponent<AttackInfo>();
+            if (curHP >= MaxHP)
+            {
+                SetHPBar();
+                setHpBar = true;
+            }
+            curHP -= attackInfo.Damage;
+        }
+    }
+
 }

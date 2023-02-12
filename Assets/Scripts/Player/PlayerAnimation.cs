@@ -34,14 +34,14 @@ public class PlayerAnimation : MonoBehaviour
     //ComboAttack Animation
     private void BasicAttackCombo()
     {
-        Debug.Log(player.comboCount);
+        //Debug.Log(player.comboCount);
         if (player.comboCount == 2)
         {
             anim.SetBool("isBasicAttack2", true);
         }
         if (player.comboCount == 1)
         {
-            Debug.Log("bb");
+            //Debug.Log("bb");
             player.comboCount = 1;
             player.basicAttack1 = true;
             player.basicAttack2 = false;
@@ -52,7 +52,7 @@ public class PlayerAnimation : MonoBehaviour
     private void BasicAttack2End()
     {
         combonum = 0;
-        Debug.Log("noError");
+        //Debug.Log("noError");
         player.dashError = false;
         anim.SetBool("isBasicAttack2", false);
         player.canDash = true;

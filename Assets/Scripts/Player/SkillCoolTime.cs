@@ -10,12 +10,16 @@ public class SkillCoolTime : MonoBehaviour
     [SerializeField] public Image fillImg;
     [SerializeField] float cooltime;
     [SerializeField] PlayerMove player;
+    PlayerLevelManager levelManager;
     private float curtime;
     private float timeStart;
     private bool isEnded = true;
 
     void Start()
     {
+        levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
+        cooltime -= cooltime * (levelManager.CDR / 100);
+        Debug.Log(cooltime);
         Init_UI();
         fillImg.fillAmount = 0;
     }

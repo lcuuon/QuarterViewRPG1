@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     private CapsuleCollider collider;
     Rigidbody rb;
     [SerializeField] GameObject attack;
+    PlayerLevelManager levelManager;
 
     //HP Bar
     [SerializeField] Canvas hpBarCanvas;
@@ -30,6 +31,8 @@ public class Enemy : MonoBehaviour
     public float MaxHP;
     public float curHP;
     private bool isDeath;
+    private bool isDamaged;
+    public float Exp;
 
     //CC
     private bool isknockback;
@@ -37,6 +40,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
+        isDamaged = true;
         attack.SetActive(false);
         canMove = true;
         curHP = MaxHP;
@@ -117,6 +122,7 @@ public class Enemy : MonoBehaviour
         anim.SetBool("isRun", false);
         anim.CrossFade("Death", 0f);
         Invoke("Destroy", 15f);
+        levelManager.CurExp += Exp;
     }
 
     private void Destroy()
@@ -171,13 +177,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack")
         {
-            AttackInfo attackInfo = other.gameObject.GetComponent<AttackInfo>();
-            if (curHP >= MaxHP)
+            if (isDamaged)
             {
+                isDamaged = false;
                 SetHPBar();
                 setHpBar = true;
-            }
-            curHP -= attackInfo.Damage;
+            }   
         }
     }
 

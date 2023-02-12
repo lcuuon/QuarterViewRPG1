@@ -40,14 +40,9 @@ public class EnemyHPbar : MonoBehaviour
         {
             if (slider.value <= 0)
             {
-                Invoke("Destroy", 5f);
+                isdeath = true;
+                Destroy(this.gameObject);
             }
         }
-    }
-
-    private void Destroy()
-    {
-        isdeath = true;
-        Destroy(this.gameObject);
     }
 }

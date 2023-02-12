@@ -10,13 +10,13 @@ public class Gate : MonoBehaviour
     [SerializeField] Image image;
     
 
-    StartSceneLoad gm;
+    GameManager gm;
 
     private bool isin;
 
     void Start()
     {
-        gm = GameObject.Find("GameManager").GetComponent<StartSceneLoad>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         image.gameObject.SetActive(false);
     }
 
@@ -26,7 +26,8 @@ public class Gate : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                gm.StartCoroutine(gm.FadeOut(SceneName, playerPos));
+                isin = false;
+                gm.StartCoroutine(gm.FadeOut(SceneName));
             }
         }
     }
@@ -44,6 +45,7 @@ public class Gate : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isin = false;
+            image.gameObject.SetActive(false);
         }
     }
 }

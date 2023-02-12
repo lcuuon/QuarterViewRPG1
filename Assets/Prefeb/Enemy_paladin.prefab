@@ -1446,6 +1446,7 @@ MonoBehaviour:
   hpBarSlider: {fileID: 0}
   MaxHP: 100
   curHP: 0
+  Exp: 20
 --- !u!1 &3775214297566393048
 GameObject:
   m_ObjectHideFlags: 0

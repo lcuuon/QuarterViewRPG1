@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackInfo : MonoBehaviour
@@ -7,14 +8,17 @@ public class AttackInfo : MonoBehaviour
     Enemy enemy;
     Rigidbody enemyrb;
     PlayerMove player;
+    PlayerLevelManager levelManager;
 
-    [SerializeField] public float Damage;
+    [SerializeField] float SkillDamage;
+    [SerializeField] float SkillCoefficient;
     [SerializeField] float castingTime;
     [SerializeField] float KnockbackRange;
     [SerializeField] float SternTime;
 
     void Start()
     {
+        levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
         player = GetComponentInParent<PlayerMove>();
     }
 
@@ -30,6 +34,7 @@ public class AttackInfo : MonoBehaviour
             //Debug.Log("Damage");
             enemy = other.GetComponent<Enemy>();
             enemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
+            enemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage;
         }
     }
 }

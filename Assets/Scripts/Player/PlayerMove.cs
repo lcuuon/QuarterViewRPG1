@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] GameObject moveping;
     [SerializeField] Slider hpSlider;
     [SerializeField] SkillCoolTime skill;
+    private PlayerLevelManager levelManager;
+    private GameManager gm;
     private Animator movePingAnim;
     private Rigidbody rb;
     private Animator anim;
@@ -19,9 +21,10 @@ public class PlayerMove : MonoBehaviour
 
     //Basic AttackSpeed
     [Header("Info")]
-    [SerializeField] private float attackSpeed;
-    [SerializeField] float PlayerMaxHP;
+    //[SerializeField] private float attackSpeed;
+    //[SerializeField] public float PlayerMaxHP;
     public float PlayerCurHP;
+    public bool isDead;
 
     //Current curser position
     [Header("Other")]
@@ -41,13 +44,15 @@ public class PlayerMove : MonoBehaviour
     //MoveLimit
     public bool canMove;
 
-    //Component
+    
     
 
     void Start()
     {
-        PlayerCurHP = PlayerMaxHP;
-        hpSlider.maxValue = PlayerMaxHP;
+        levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        PlayerCurHP = levelManager.MaxHP;
+        hpSlider.maxValue = levelManager.MaxHP;
         canBasicAttack = true;
         basicAttack1 = true;
         canMove = true;
@@ -55,131 +60,154 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
-        anim.SetFloat("AttackSpeed", attackSpeed);
+        anim.SetFloat("AttackSpeed", levelManager.AtkSpeed);
     }
 
     void Update()
     {
-        hpSlider.value = PlayerCurHP;
 
-        ParentOb.transform.position = transform.position;
-
-        anim.SetFloat("AttackSpeed", attackSpeed);
-
-        if (nav.velocity.magnitude <= 1)
+        if (!isDead)
         {
-            anim.SetBool("ismove", false);
-        }
+            hpSlider.value = PlayerCurHP;
 
-        //Dash
-        if (canDash)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (PlayerCurHP <= 0)
             {
-                skill.Trigger_Skill();
-                basicAttack1 = false;
-                basicAttack2 = false;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                anim.CrossFade("Death", 0.1f);
+                isDead = true;
+                Invoke("Death", 2f);
+            }
 
-                canMove = false;
+            ParentOb.transform.position = transform.position;
 
-                RaycastHit hit;
+            anim.SetFloat("AttackSpeed", levelManager.AtkSpeed);
+            nav.speed = levelManager.MoveSpeed;
 
-                isdash = true;
-                if (Physics.Raycast(ray, out hit, 100))
+
+            if (nav.velocity.magnitude <= 1)
+            {
+                anim.SetBool("ismove", false);
+            }
+
+            //Dash
+            if (canDash)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    skill.Trigger_Skill();
+                    basicAttack1 = false;
+                    basicAttack2 = false;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                    curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
-                    nav.SetDestination(transform.position);
-                    transform.LookAt(curPointerPos);
-                    anim.CrossFade("DashForward", 0f);
-                    Vector3 DashDir = transform.localRotation * Vector3.forward;
-                    rb.velocity = DashDir * 30;
-                    Invoke("StopDash", 0.3f);
+                    canMove = false;
 
+                    RaycastHit hit;
+
+                    isdash = true;
+                    if (Physics.Raycast(ray, out hit, 100))
+                    {
+
+                        curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
+                        nav.SetDestination(transform.position);
+                        transform.LookAt(curPointerPos);
+                        anim.CrossFade("DashForward", 0f);
+                        Vector3 DashDir = transform.localRotation * Vector3.forward;
+                        rb.velocity = DashDir * 30;
+                        Invoke("StopDash", 0.3f);
+
+                    }
                 }
             }
-        }
-        if (isdash)
-        {
-            nav.SetDestination(transform.position);
-            transform.LookAt(curPointerPos);
-        }
-
-        //Moveping Control
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
+            if (isdash)
             {
-                GameObject movepinginstance = Instantiate(moveping);
-                movepinginstance.transform.parent = transform.parent;
-                movePingAnim = movepinginstance.GetComponent<Animator>();
-                movePingAnim.SetBool("isClick", true);
-                movepinginstance.transform.position = new Vector3(hit.point.x, moveping.transform.position.y, hit.point.z);
-                StartCoroutine(MovePing(movepinginstance));
+                nav.SetDestination(transform.position);
+                transform.LookAt(curPointerPos);
             }
-        }
 
-        //Player Movement
-        if (Input.GetMouseButton(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                if (canMove == true)
-                {
-                    nav.SetDestination(new Vector3(hit.point.x, 1.8f, hit.point.z));
-                    anim.SetBool("ismove", true);
-                }
-            }
-        }
-
-        //BasicAttack
-        if (canBasicAttack)
-        {
-            if (Input.GetMouseButtonDown(0))
+            //Moveping Control
+            if (Input.GetMouseButtonDown(1))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 RaycastHit hit;
 
-                //MoveLimit
-                canMove = false;
-                canDash = false;
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+                    GameObject movepinginstance = Instantiate(moveping);
+                    movepinginstance.transform.parent = transform.parent;
+                    movePingAnim = movepinginstance.GetComponent<Animator>();
+                    movePingAnim.SetBool("isClick", true);
+                    movepinginstance.transform.position = new Vector3(hit.point.x, moveping.transform.position.y, hit.point.z);
+                    StartCoroutine(MovePing(movepinginstance));
+                }
+            }
+
+            //Player Movement
+            if (Input.GetMouseButton(1))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, 100))
                 {
-                    curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
-                    nav.SetDestination(transform.position);
-                    transform.LookAt(curPointerPos);
-                    if (basicAttack1)
+                    if (canMove == true)
                     {
-                        comboCount = 1;
-                        anim.CrossFade("Attack2", 0f);
-                        basicAttack1 = false;
-                        basicAttack2 = true;
-                    }
-                    else if (basicAttack2)
-                    {
-                        comboCount = 2;
-
+                        nav.SetDestination(new Vector3(hit.point.x, 1.8f, hit.point.z));
+                        anim.SetBool("ismove", true);
                     }
                 }
             }
-            //if (dashError)
-            //{
-            //    Invoke("ErrorFix", (0.867f / attackSpeed) * 0.45f);
-            //    dashError = false;
-            //}
+
+            //BasicAttack
+            if (canBasicAttack)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                    RaycastHit hit;
+
+                    //MoveLimit
+                    canMove = false;
+                    canDash = false;
+
+                    if (Physics.Raycast(ray, out hit, 100))
+                    {
+                        curPointerPos = new Vector3(hit.point.x, 0, hit.point.z);
+                        nav.SetDestination(transform.position);
+                        transform.LookAt(curPointerPos);
+                        if (basicAttack1)
+                        {
+                            comboCount = 1;
+                            anim.CrossFade("Attack2", 0f);
+                            basicAttack1 = false;
+                            basicAttack2 = true;
+                        }
+                        else if (basicAttack2)
+                        {
+                            comboCount = 2;
+
+                        }
+                    }
+                }
+                //if (dashError)
+                //{
+                //    Invoke("ErrorFix", (0.867f / attackSpeed) * 0.45f);
+                //    dashError = false;
+                //}
+            }
         }
         
+
+        
+        
+    }
+
+    private void Death()
+    {
+        //PlayerCurHP = PlayerMaxHP;
+        //Debug.Log(PlayerCurHP);
+        gm.StartCoroutine(gm.FadeOut("Start_Village"));
     }
     
     //ErrorFix

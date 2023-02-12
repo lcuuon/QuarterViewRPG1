@@ -3033,7 +3033,7 @@ GameObject:
   - component: {fileID: 311001256}
   - component: {fileID: 311001257}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: ExpSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18733,7 +18733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db4c48740500f045b709b040bf7ffd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 20
+  SkillDamage: 0
+  SkillCoefficient: 1
   castingTime: 0
   KnockbackRange: 20
   SternTime: 0
@@ -18847,7 +18848,7 @@ GameObject:
   - component: {fileID: 4008561908772623909}
   - component: {fileID: 4008561908772623908}
   m_Layer: 7
-  m_Name: Character1
+  m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18891,9 +18892,8 @@ MonoBehaviour:
   moveping: {fileID: 67138812039529823, guid: 1f7779c0c6debab41b8a32b06e24fc67, type: 3}
   hpSlider: {fileID: 2146319297}
   skill: {fileID: 2126752664}
-  attackSpeed: 1
-  PlayerMaxHP: 100
   PlayerCurHP: 0
+  isDead: 0
   curPointerPos: {x: 0, y: 0, z: 0}
   isdash: 0
   dashError: 0

@@ -821,12 +821,12 @@ MonoBehaviour:
   MaxExp: 0
   CurExp: 0
   Level: 0
-  statPoint: 0
-  MaxHP: 300
-  AtkDamage: 50
+  statPoint: 5
+  MaxHP: 200
+  AtkDamage: 20
   AtkSpeed: 1
-  MoveSpeed: 15
-  CDR: 10
+  MoveSpeed: 10
+  CDR: 0
   MaxHPLv: 0
   AtkDamageLv: 0
   AtkSpeedLv: 0

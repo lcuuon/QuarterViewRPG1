@@ -18,13 +18,13 @@ public class PlayerLevelManager : MonoBehaviour
     public float MoveSpeed;
     public float CDR;
 
-
+     
     [Header("Stats_Level_Info")]
-    public float MaxHPLv;
-    public float AtkDamageLv;
-    public float AtkSpeedLv;
-    public float MoveSpeedLv;
-    public float CDRLv;
+    public int MaxHPLv = 1;
+    public int AtkDamageLv = 1;
+    public int AtkSpeedLv = 1;
+    public int MoveSpeedLv = 1;
+    public int CDRLv = 1;
 
     public Slider expBar;
 

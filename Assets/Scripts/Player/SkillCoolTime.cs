@@ -14,11 +14,13 @@ public class SkillCoolTime : MonoBehaviour
     private float curtime;
     private float timeStart;
     private bool isEnded = true;
+    private float[] tempCooltime = new float[4];
 
     void Start()
     {
+        tempCooltime[0] = cooltime;
         levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
-        cooltime -= cooltime * (levelManager.CDR / 100);
+        CoolTimeReset();
         Debug.Log(cooltime);
         Init_UI();
         fillImg.fillAmount = 0;
@@ -29,6 +31,12 @@ public class SkillCoolTime : MonoBehaviour
         if (isEnded)
             return;
         Check_CoolTime();
+    }
+
+    public void CoolTimeReset()
+    {
+        cooltime = tempCooltime[0];
+        cooltime -= tempCooltime[0] * (levelManager.CDR / 100);
     }
 
     private void Init_UI()

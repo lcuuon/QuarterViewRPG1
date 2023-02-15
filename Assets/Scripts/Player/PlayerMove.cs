@@ -25,6 +25,7 @@ public class PlayerMove : MonoBehaviour
     //[SerializeField] public float PlayerMaxHP;
     public float PlayerCurHP;
     public bool isDead;
+    public bool isUI;
 
     //Current curser position
     [Header("Other")]
@@ -66,7 +67,7 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
 
-        if (!isDead)
+        if (!isDead && !isUI)
         {
             hpSlider.value = PlayerCurHP;
 
@@ -229,6 +230,7 @@ public class PlayerMove : MonoBehaviour
         rb.velocity = Vector3.zero;
         isdash = false;
         canMove = true;
+        canBasicAttack = true;
         basicAttack1 = true;
         basicAttack2 = false;
     }

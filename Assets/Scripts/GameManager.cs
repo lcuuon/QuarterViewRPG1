@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 
     private Image blackScreen;
-    GameObject canvas;
     GameObject player;
     PlayerMove playerCs;
     PlayerLevelManager levelManager;
+    TMP_Text Hp_Value;
+    private int curHp;
 
     [SerializeField] private float HP;
 
@@ -26,12 +28,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     void Update()
     {
-
+        if (Hp_Value != null)
+        {
+            curHp = (int)playerCs.PlayerCurHP;
+            Hp_Value.text = ($"{curHp} / {levelManager.MaxHP}");
+        }
     }
 
     void OnEnable()
@@ -42,7 +48,10 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "Loading")
+        {
+            Hp_Value = GameObject.Find("HPValue").GetComponent<TMP_Text>();
             levelManager.expBar = GameObject.Find("ExpSlider").GetComponent<Slider>();
+        }
         if(levelManager.expBar != null)
             levelManager.expBar.maxValue = levelManager.MaxExp;
         player = GameObject.Find("Player");
@@ -60,7 +69,6 @@ public class GameManager : MonoBehaviour
             }
         }
         blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
-        canvas = GameObject.Find("Canvas");
         StartCoroutine("FadeIn");
     }
 

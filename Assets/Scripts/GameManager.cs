@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+[System.Serializable]
+
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +30,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        Item_DataManager.GetInstance().LoadDatas();
+        //var data = Item_DataManager.GetInstance().dicItemDatas[1];
+        //Debug.LogFormat("{0}, {1}", data.id, data.name);
     }
 
     void Update()

@@ -18221,7 +18221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c009d33960f319246af84858ff1a0e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: Map-1
+  SceneName: Stage_2-1
   playerPos: {x: -74, y: 0, z: 72}
   image: {fileID: 1845815486}
 --- !u!33 &6457955084092733169

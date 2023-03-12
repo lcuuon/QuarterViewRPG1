@@ -25,7 +25,7 @@ public class Item_DataManager
     public void LoadDatas()
     {
         var json = Resources.Load<TextAsset>("Datas/itemData").text;
-        var arrItemDatas = JsonConvert.DeserializeObject<Items[]>(json);
+        var arrItemDatas = JsonConvert.DeserializeObject<Item_Data[]>(json);
         foreach (var data in arrItemDatas)
         {
             Debug.LogFormat("{0}, {1}", data.id, data.name);

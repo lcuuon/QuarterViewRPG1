@@ -17,6 +17,8 @@ public class PlayerLevelManager : MonoBehaviour
     public float AtkSpeed;
     public float MoveSpeed;
     public float CDR;
+    public int criticalProb = 50;
+    public int criticalDmg;
 
      
     [Header("Stats_Level_Info")]

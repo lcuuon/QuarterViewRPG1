@@ -25,12 +25,12 @@ public class Item_DataManager
     public void LoadDatas()
     {
         var json = Resources.Load<TextAsset>("Datas/itemData").text;
-        var arrItemDatas = JsonConvert.DeserializeObject<Items[]>(json);
+        var arrItemDatas = JsonConvert.DeserializeObject<Item_Data[]>(json);
         foreach (var data in arrItemDatas)
         {
-            Debug.LogFormat("{0}, {1}", data.id, data.name);
+            Debug.LogFormat("id : {0}, name : {1}, atk : {2}, movespeed : {3}, criticalProb : {4}, criticalDmg : {5}, CDR : {6}, HP : {7}, attackSpeed : {8}",
+            data.id, data.name, data.atk, data.movespeed, data.criticalProb, data.criticalDmg, data.CDR, data.HP, data.attackSpeed);
         }
-        //this.dicItemDatas = arrItemDatas.ToDictionary(x => x.id);
     }
     
 

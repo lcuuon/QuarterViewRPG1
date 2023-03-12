@@ -27,6 +27,26 @@ public class AttackInfo : MonoBehaviour
         
     }
 
+    private int CriticalProbCal()
+    {
+        if (levelManager.criticalProb > 0)
+        {
+            int CriCheck = Random.RandomRange(1, 100);
+            bool isCritical = (CriCheck <= levelManager.criticalProb);
+            if (isCritical)
+            {
+                Debug.Log("Critical!");
+                return levelManager.criticalDmg;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+
+        return 0;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -34,7 +54,7 @@ public class AttackInfo : MonoBehaviour
             //Debug.Log("Damage");
             enemy = other.GetComponent<Enemy>();
             enemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
-            enemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage;
+            enemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
         }
     }
 }

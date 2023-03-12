@@ -1,42 +1,112 @@
 [
-    {
-      "id": "1",
-      "name": "불타는 검"
-    },
-    {
-      "id": "2",
-      "name": "마력의 보주"
-    },
-    {
-      "id": "3",
-      "name": "활강의 건틀릿"
-    },
-    {
-      "id": "4",
-      "name": "수호의 갑옷"
-    },
-    {
-      "id": "5",
-      "name": "흑철의 투구"
-    },
-    {
-      "id": "6",
-      "name": "암살자의 단검"
-    },
-    {
-      "id": "7",
-      "name": "불멸의 반지"
-    },
-    {
-      "id": "8",
-      "name": "영혼의 활"
-    },
-    {
-      "id": "9",
-      "name": "신성한 방패"
-    },
-    {
-      "id": "10",
-      "name": "마력의 수정"
-    }
+  {
+    "id": 1,
+    "name": "불타는 검",
+    "atk": 50,
+    "movespeed": 0,
+    "criticalProb": 5,
+    "criticalDmg": 25,
+    "attackSpeed": 0,
+    "CDR": 0,
+    "HP": 0
+  },
+  {
+    "id": 2,
+    "name": "마력의 보주",
+    "atk": 0,
+    "movespeed": 0,
+    "criticalProb": 0,
+    "criticalDmg": 0,
+    "attackSpeed": 0,
+    "CDR": 20,
+    "HP": 100
+  },
+  {
+    "id": 3,
+    "name": "활강의 건틀릿",
+    "atk": 0,
+    "movespeed": 10,
+    "criticalProb": 0,
+    "criticalDmg": 0,
+    "attackSpeed": 10,
+    "CDR": 0,
+    "HP": 0
+  },
+  {
+    "id": 4,
+    "name": "수호의 갑옷",
+    "atk": 0,
+    "movespeed": 0,
+    "criticalProb": -5,
+    "criticalDmg": 0,
+    "attackSpeed": 0,
+    "CDR": 0,
+    "HP": 250
+  },
+  {
+    "id": 5,
+    "name": "흑철의 투구",
+    "atk": 100,
+    "movespeed": 0,
+    "criticalProb": 0,
+    "criticalDmg": 0,
+    "attackSpeed": 0,
+    "CDR": 0,
+    "HP": 150
+  },
+  {
+    "id": 6,
+    "name": "암살자의 단검",
+    "atk": 0,
+    "movespeed": 20,
+    "criticalProb": 10,
+    "criticalDmg": 0,
+    "attackSpeed": 20,
+    "CDR": 0,
+    "HP": 0
+  },
+  {
+    "id": 7,
+    "name": "불멸의 반지",
+    "atk": 0,
+    "movespeed": 0,
+    "criticalProb": 0,
+    "criticalDmg": 50,
+    "attackSpeed": 0,
+    "CDR": 30,
+    "HP": 500
+  },
+  {
+    "id": 8,
+    "name": "영혼의 활",
+    "atk": 80,
+    "movespeed": 15,
+    "criticalProb": 10,
+    "criticalDmg": 0,
+    "attackSpeed": 0,
+    "CDR": 0,
+    "HP": 0
+  },
+  {
+    "id": 9,
+    "name": "신성한 방패",
+    "atk": -15,
+    "movespeed": 0,
+    "criticalProb": -10,
+    "criticalDmg": 0,
+    "attackSpeed": 0,
+    "CDR": 0,
+    "HP": 300
+  },
+  {
+    "id": 10,
+    "name": "마력의 수정",
+    "atk": 0,
+    "movespeed": 0,
+    "criticalProb": 0,
+    "criticalDmg": 0,
+    "attackSpeed": 0,
+    "CDR": 25,
+    "HP": 200
+  }
 ]

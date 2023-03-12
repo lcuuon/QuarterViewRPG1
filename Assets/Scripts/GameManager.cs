@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Item_DataManager.GetInstance().LoadDatas();
+        //Item_DataManager.GetInstance().LoadDatas();
         //var data = Item_DataManager.GetInstance().dicItemDatas[1];
         //Debug.LogFormat("{0}, {1}", data.id, data.name);
     }

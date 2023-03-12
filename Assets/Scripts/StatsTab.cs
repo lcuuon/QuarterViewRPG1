@@ -58,11 +58,15 @@ public class StatsTab : MonoBehaviour
             statTab.SetActive(true);
             Invoke("closeTab", 0.5f);
         }
-        if (Input.GetKeyDown(KeyCode.F) && statTabOpen)
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Escape))
         {
-            player.isUI = false;
-            statTab.SetActive(false);
-            statTabOpen = false;
+            if (statTabOpen)
+            {
+                player.isUI = false;
+                statTab.SetActive(false);
+                statTabOpen = false;
+            }
+            
         }
     }
 
@@ -119,8 +123,8 @@ public class StatsTab : MonoBehaviour
             {
                 levelManager.AtkSpeedLv++;
                 levelManager.statPoint -= reqPoint;
-                levelManager.AtkSpeed += levelManager.AtkSpeed * 0.05f;
-                statPluse[2] += 5;
+                levelManager.AtkSpeed += levelManager.AtkSpeed * 0.03f;
+                statPluse[2] += 3;
                 reqPoints[2] = 5 * (int)(Math.Pow(2, levelManager.AtkSpeedLv));
                 StatTabSet();
             }
@@ -136,8 +140,8 @@ public class StatsTab : MonoBehaviour
             {
                 levelManager.MoveSpeedLv++;
                 levelManager.statPoint -= reqPoint;
-                levelManager.MoveSpeed += levelManager.MoveSpeed * 0.1f;
-                statPluse[3] += 10;
+                levelManager.MoveSpeed += levelManager.MoveSpeed * 0.03f;
+                statPluse[3] += 3;
                 reqPoints[3] = 5 * (int)(Math.Pow(2, levelManager.MoveSpeedLv));
                 StatTabSet();
             }
@@ -153,8 +157,8 @@ public class StatsTab : MonoBehaviour
             {
                 levelManager.CDRLv++;
                 levelManager.statPoint -= reqPoint;
-                levelManager.CDR += 5;
-                statPluse[4] += 5;
+                levelManager.CDR += 3;
+                statPluse[4] += 3;
                 reqPoints[4] = 5 * (int)(Math.Pow(2, levelManager.CDRLv));
                 coolTime.CoolTimeReset();
                 StatTabSet();

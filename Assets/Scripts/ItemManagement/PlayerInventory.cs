@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Item_DataManager.GetInstance().LoadDatas();
+            var data = Item_DataManager.GetInstance().LoadDatas();
 
         }
     }

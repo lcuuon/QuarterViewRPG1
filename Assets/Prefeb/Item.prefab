@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7659321055296497476}
   - component: {fileID: 7038269096284189794}
   - component: {fileID: 6171157697924231885}
+  - component: {fileID: 5956505679335989566}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -91,3 +92,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
   itemId: 0
+--- !u!65 &5956505679335989566
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7032407433954300976}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 83.1, y: 84.22, z: 27.7}
+  m_Center: {x: 0, y: 0, z: 0}

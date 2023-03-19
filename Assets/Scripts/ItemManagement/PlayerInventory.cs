@@ -70,6 +70,10 @@ public class PlayerInventory : MonoBehaviour
                 }
             }
         }
+        for (int i = 0; i < 16; i++)
+        {
+            Debug.Log(standbyItem[i]);
+        }
     }
 
     private void ItemInit()
@@ -81,6 +85,7 @@ public class PlayerInventory : MonoBehaviour
                 if (standbyItem[i] != 666)
                 {
                     slotInstance(standbyItem[i]);
+                    Debug.Log(standbyItem[i]);
                 }
             }
         }
@@ -94,24 +99,33 @@ public class PlayerInventory : MonoBehaviour
     {
         float posx = -270.8f;
         float posy = -288.3f;
+        bool isIn = false;
 
         for (int i = 0; i < 2; i++)
         {
-            for (int j = 0; j < 8; j++)
+
+            for (int j = 0; j < 7; j++)
             {
                 if (slot[i, j] == null)
                 {
+                    isIn = true;                 
                     slot[i, j] = Instantiate(ItemPrefeb);
-                    slot[i, j].gameObject.transform.parent = GameObject.Find("InventorySlot").transform;
-                    slot[i, j].rectTransform.position = new Vector3(posx, posy, 0);
+                    slot[i, j].gameObject.transform.SetParent(GameObject.Find("InventorySlot").transform, false);                    
+                    slot[i, j].gameObject.GetComponent<RectTransform>().localPosition = new Vector3(posx, posy, 0);
                     slot[i, j].sprite = dropTable.itemImg[itemId];
                     slot[i, j].gameObject.GetComponent<Slot>().itemId = itemId;
+                    Debug.Log(posx);
+                    Debug.Log(posy);
                     break;
                 }
-                posy += 90;
+                posx += 90;
             }
-            posx -= 93;
-
+            if (isIn)
+            {
+                break;
+            }
+            posx = -270.8f;
+            posy -= 93;
         }
     }
 }

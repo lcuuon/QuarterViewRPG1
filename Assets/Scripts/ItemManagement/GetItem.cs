@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class GetItem : MonoBehaviour
+
+public class GetItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public int itemId;
     private PlayerInventory inventory;
     [SerializeField] private DropTable dropTable;
+    [SerializeField] private GameObject Info;
 
     void Start()
     {
@@ -24,5 +27,13 @@ public class GetItem : MonoBehaviour
         dropTable.closeTab();
     }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Info.SetActive(false);
+    }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Info.SetActive(true);
+    }
 }

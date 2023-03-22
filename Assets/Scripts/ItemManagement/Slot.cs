@@ -9,6 +9,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     PlayerLevelManager levelManager;
     Item_Data data;
     [SerializeField] private PlayerInventory inventory;
+    [SerializeField] private GameObject Info;
 
     public int itemId;
 

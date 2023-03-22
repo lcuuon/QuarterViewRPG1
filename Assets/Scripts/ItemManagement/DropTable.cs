@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class DropTable : MonoBehaviour
     [SerializeField] public Sprite[] itemImg;
     [SerializeField] Button item1b;
     [SerializeField] Button item2b;
+    
 
     private PlayerMove player;
     private GetItem button1;
@@ -63,16 +65,18 @@ public class DropTable : MonoBehaviour
 
     private void ItemLoad()
     {
-        int item1 = Random.RandomRange(0, 9);
-        int item2 = Random.RandomRange(0, 9);
+        int item1 = Random.Range(0, 9);
+        int item2 = Random.Range(0, 9);
 
 
         while (item1 == item2)
         {
-            item2 = Random.RandomRange(0, 9);
+            item2 = Random.Range(0, 9);
         }
         button1.itemId = item1;
         button2.itemId = item2;
+        button1.ItemReset();
+        button2.ItemReset();
 
         item1b.image.sprite = itemImg[item1];
         item2b.image.sprite = itemImg[item2];

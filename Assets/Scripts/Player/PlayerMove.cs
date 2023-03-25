@@ -66,7 +66,10 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-
+        if (isUI)
+        {
+            nav.SetDestination(transform.position);
+        }
         if (!isDead && !isUI)
         {
             hpSlider.value = PlayerCurHP;
@@ -197,13 +200,13 @@ public class PlayerMove : MonoBehaviour
                 //    dashError = false;
                 //}
             }
-        }
-        
-
-        
-        
+        }    
     }
 
+    public void ItemWear()
+    {
+        
+    }
     private void Death()
     {
         //PlayerCurHP = PlayerMaxHP;

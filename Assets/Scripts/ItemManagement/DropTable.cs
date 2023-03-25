@@ -35,6 +35,7 @@ public class DropTable : MonoBehaviour
 
     void Update()
     {
+
         if (!isopen)
         {
             if (Input.GetKeyDown(KeyCode.D))

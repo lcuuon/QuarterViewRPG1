@@ -70,7 +70,7 @@ public class PlayerMove : MonoBehaviour
         {
             nav.SetDestination(transform.position);
         }
-        if (!isDead && !isUI)
+        if (!isDead && !isUI && !gm.sceneChange)
         {
             hpSlider.value = PlayerCurHP;
 
@@ -194,23 +194,22 @@ public class PlayerMove : MonoBehaviour
                         }
                     }
                 }
-                //if (dashError)
-                //{
-                //    Invoke("ErrorFix", (0.867f / attackSpeed) * 0.45f);
-                //    dashError = false;
-                //}
+                
             }
         }    
     }
 
-    public void ItemWear()
+    public void NavSet()
     {
-        
+        nav.enabled = true;
     }
+    public void NavClear()
+    {
+        nav.enabled = false;
+    }
+    
     private void Death()
     {
-        //PlayerCurHP = PlayerMaxHP;
-        //Debug.Log(PlayerCurHP);
         gm.StartCoroutine(gm.FadeOut("Start_Village"));
     }
     

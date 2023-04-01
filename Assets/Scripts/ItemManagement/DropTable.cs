@@ -57,6 +57,14 @@ public class DropTable : MonoBehaviour
         
     }
 
+    public void OpenTab()
+    {
+        player.isUI = true;
+        Droptable.SetActive(true);
+        isopen = true;
+        ItemLoad();
+    }
+
     public void closeTab()
     {
         player.isUI = false;

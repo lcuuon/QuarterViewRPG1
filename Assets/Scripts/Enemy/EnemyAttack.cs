@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] PlayerMove player;
+    private PlayerMove player;
 
     [SerializeField] float Damage;
 
     void Start()
     {
-        
+        player = GameObject.Find("Character").GetComponent<PlayerMove>();
     }
 
     void Update()

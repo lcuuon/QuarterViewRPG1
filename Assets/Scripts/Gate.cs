@@ -27,6 +27,7 @@ public class Gate : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 isin = false;
+                image.gameObject.SetActive(false);
                 gm.StartCoroutine(gm.FadeOut(SceneName));
             }
         }

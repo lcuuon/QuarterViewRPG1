@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     PlayerLevelManager levelManager;
     TMP_Text Hp_Value;
     private int curHp;
+    public bool sceneChange = false;
 
     [SerializeField] private float HP;
 
@@ -63,11 +64,11 @@ public class GameManager : MonoBehaviour
             playerCs = player.GetComponentInChildren<PlayerMove>();
             if (scene.name == "Start_Village")
             {
-                Debug.Log("re");
                 playerCs.PlayerCurHP = levelManager.MaxHP;
             }
             else
             {
+                sceneChange = true;
                 Invoke("HPupdate", 0.1f);
             }
         }
@@ -78,8 +79,6 @@ public class GameManager : MonoBehaviour
     private void HPupdate()
     {
         playerCs.PlayerCurHP = HP;
-        Debug.Log(playerCs.gameObject.name);
-        Debug.Log(HP);
     }
 
     public void GameStart()
@@ -101,11 +100,11 @@ public class GameManager : MonoBehaviour
         if(player != null)
         {
                 HP = playerCs.PlayerCurHP;
-                //Debug.Log(HP);
         }
         SceneManager.LoadScene(sceneName);
+        if (player != null)
+            playerCs.NavClear();
         
-        //blackScreen.gameObject.SetActive(false);
     }
     IEnumerator FadeIn()
     {
@@ -118,5 +117,8 @@ public class GameManager : MonoBehaviour
             blackScreen.color = new Color(0, 0, 0, fadeCount);
         }
         blackScreen.gameObject.SetActive(false);
+        sceneChange = false;
+        if (player != null)
+            playerCs.NavSet();
     }
 }

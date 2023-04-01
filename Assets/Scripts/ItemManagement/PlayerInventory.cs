@@ -13,7 +13,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private DropTable dropTable;
     [SerializeField] public GameObject itemMenu;
 
-    public Image[,] slot = new Image[2, 8];
+    public Image[,] slot = new Image[2, 7];
+    private Image[] WearingSlot = new Image[5];
     private int[] standbyItem = new int[14];
     private int standbySlot = 14;
     public bool isopen;
@@ -130,8 +131,8 @@ public class PlayerInventory : MonoBehaviour
 
     public void slotInstance(int itemId)
     {
-        float posx = -270.8f;
-        float posy = -288.3f;
+        float posx = -276.4f;
+        float posy = -286.5f;
         bool isIn = false;
 
         for (int i = 0; i < 2; i++)
@@ -168,17 +169,108 @@ public class PlayerInventory : MonoBehaviour
 
                     break;
                 }
-                posx += 90;
+                posx += 92;
             }
             if (isIn)
             {
                 break;
             }
-            posx = -270.8f;
+            posx = -276.4f;
             posy -= 93;
         }
 
         
 
+    }
+
+    public void slotchange(int curslot, bool iswear)
+    {
+        Debug.Log(curslot);
+
+        if (iswear)
+        {
+            int index1 = 0;
+            int index2 = 0;
+
+            float posx = -184.4f;
+            float posy = -138.2f;
+
+            bool check = false;
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (slot[i, j] != null)
+                    {
+                        if (slot[i, j].gameObject.GetComponent<Slot>().itemRegist == curslot)
+                        {
+                            index1 = i;
+                            index2 = j;
+                            check = true;
+                            break;
+                        }
+                    }
+                }
+                if (check)
+                {
+                    break;
+                }    
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (WearingSlot[i] == null)
+                {
+                    WearingSlot[i] = slot[index1, index2];
+                    slot[index1, index2] = null;
+                    WearingSlot[i].gameObject.GetComponent<RectTransform>().localPosition = new Vector3(posx, posy, 0);
+                    break;
+                }
+                posx += 92;
+            }
+        }
+        else
+        {
+            int index = 0;
+
+            float posx = -276.4f;
+            float posy = -286.5f;
+            bool isIn = false;
+
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (WearingSlot[i] != null)
+                {
+                    if (WearingSlot[i].gameObject.GetComponent<Slot>().itemRegist == curslot)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (slot[i, j] == null)
+                    {
+                        slot[i, j] = WearingSlot[index];
+                        WearingSlot[index] = null;
+                        slot[i, j].gameObject.GetComponent<RectTransform>().localPosition = new Vector3(posx, posy, 0);
+                        isIn = true;
+                        break;
+                    }
+                    posx += 92;
+                }
+                if (isIn)
+                {
+                    break;
+                }
+                posx = -276.4f;
+                posy -= 93;
+            }
+        }
     }
 }

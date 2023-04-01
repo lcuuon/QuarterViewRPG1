@@ -5602,6 +5602,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 471103804}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &471103806 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 421303978587164763, guid: 4c2c6d3613ecc9c40ab3cb07c737c45c,
+    type: 3}
+  m_PrefabInstance: {fileID: 471103804}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &495304590 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4075088842576393296, guid: 4a2da4c29e210f44eae5f63c91616cd7,
@@ -18729,7 +18741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentOb: {fileID: 4008561907324419256}
   moveping: {fileID: 67138812039529823, guid: 1f7779c0c6debab41b8a32b06e24fc67, type: 3}
-  hpSlider: {fileID: 0}
+  hpSlider: {fileID: 471103806}
   skill: {fileID: 2126752664}
   PlayerCurHP: 0
   isDead: 0

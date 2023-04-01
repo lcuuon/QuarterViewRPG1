@@ -1441,9 +1441,10 @@ MonoBehaviour:
   player: {fileID: 0}
   attack: {fileID: 1422215688739254692}
   hpBarCanvas: {fileID: 0}
-  hpBarPrefeb: {fileID: 9177033056329182799, guid: 29d32ebf2c3e67d4a837d2a8f8ba6f3c,
+  hpBarPrefeb: {fileID: 1325112460415597450, guid: 58cb6f10b5acbe8459c6995e063aae0c,
     type: 3}
-  hpBarSlider: {fileID: 0}
+  hpBarSlider: {fileID: 206255724363132935, guid: 58cb6f10b5acbe8459c6995e063aae0c,
+    type: 3}
   MaxHP: 100
   curHP: 0
   Exp: 20

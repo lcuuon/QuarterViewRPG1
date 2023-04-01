@@ -10,7 +10,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 {
     PlayerLevelManager levelManager;
     Item_Data data;
-    [SerializeField] private PlayerInventory inventory;
+    private PlayerInventory inventory;
     [SerializeField] private GameObject Info;
     [SerializeField] private TMP_Text itemName;
     [SerializeField] public TMP_Text infoTxt;
@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     GameObject itemMenu;
     
     public int itemId;
-    private int itemRegist;
+    public int itemRegist;
 
     //private bool canInfo;
 
@@ -49,16 +49,15 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            Debug.Log("Click");
             Info.gameObject.SetActive(false);
             //inventory.ItemMenu();
             itemMenu.gameObject.SetActive(true);
             itemMenu.transform.SetAsLastSibling();
             var menu = itemMenu.GetComponent<ItemClickMenu>();
+            menu.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(rectT.localPosition.x + 269.8f, rectT.localPosition.y + 286.5f, 0);
             menu.itemId = itemId;
             if (itemRegist == 66)
             {
-                Debug.Log("bb");
                 for (int i = 0; i < 19; i++)
                 {
                     if (menu.itemRegist[i] == 0)
@@ -72,7 +71,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             }
             else
             {
-                Debug.Log("aa");
                 menu.curSlot = itemRegist;
             }
             if (menu.itemRegist[itemRegist] == 1)

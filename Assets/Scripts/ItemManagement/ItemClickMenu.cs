@@ -7,6 +7,7 @@ public class ItemClickMenu : MonoBehaviour
 {
     [SerializeField] public TMP_Text text;
 
+    private PlayerInventory inventory;
     PlayerLevelManager levelManager;
     public bool[] isWear = new bool[19];
     public int[] itemRegist = new int[19];
@@ -16,11 +17,12 @@ public class ItemClickMenu : MonoBehaviour
     void Start()
     {
         levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
+        inventory = GameObject.Find("InventoryP").GetComponent<PlayerInventory>();
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             this.gameObject.SetActive(false);
         }
@@ -29,6 +31,7 @@ public class ItemClickMenu : MonoBehaviour
     public void WearButton()
     {
         ItemWear();
+        inventory.slotchange(curSlot, isWear[curSlot]);
         this.gameObject.SetActive(false);
     }
 
@@ -42,7 +45,7 @@ public class ItemClickMenu : MonoBehaviour
             isWear[curSlot] = true;
             levelManager.MaxHP += data.HP;
             levelManager.AtkDamage += data.atk;
-            levelManager.AtkSpeed += data.attackSpeed;
+            levelManager.AtkSpeed += 1 * (data.attackSpeed * 0.01f);
             levelManager.CDR += data.CDR;
             levelManager.criticalProb += data.criticalProb;
             levelManager.criticalDmg += data.criticalDmg;
@@ -54,7 +57,7 @@ public class ItemClickMenu : MonoBehaviour
             isWear[curSlot] = false;
             levelManager.MaxHP -= data.HP;
             levelManager.AtkDamage -= data.atk;
-            levelManager.AtkSpeed -= data.attackSpeed;
+            levelManager.AtkSpeed -= 1 * (data.attackSpeed * 0.01f);
             levelManager.CDR -= data.CDR;
             levelManager.criticalProb -= data.criticalProb;
             levelManager.criticalDmg -= data.criticalDmg;

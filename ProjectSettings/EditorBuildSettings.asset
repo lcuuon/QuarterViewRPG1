@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadingAndMain/Loading.unity
     guid: 96ada3d7bd8186346a3dcbaea495f6ad
+  - enabled: 1
+    path: Assets/Scenes/LoadingAndMain/ForestLoading.unity
+    guid: 448df0e39793c6d499bb5b473265ac31
   m_configObjects: {}

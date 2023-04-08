@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     TMP_Text Hp_Value;
     private int curHp;
     public bool sceneChange = false;
+    private string curMap;
 
     [SerializeField] private float HP;
 
@@ -30,9 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //Item_DataManager.GetInstance().LoadDatas();
-        //var data = Item_DataManager.GetInstance().dicItemDatas[1];
-        //Debug.LogFormat("{0}, {1}", data.id, data.name);
+        
     }
 
     void Update()
@@ -51,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log(scene.name);
         if (scene.name != "Loading")
         {
             Hp_Value = GameObject.Find("HPValue").GetComponent<TMP_Text>();
@@ -72,8 +72,16 @@ public class GameManager : MonoBehaviour
                 Invoke("HPupdate", 0.1f);
             }
         }
-        blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
-        StartCoroutine("FadeIn");
+        if (scene.name != "ForestLoading")
+        {
+            blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+            StartCoroutine("FadeIn");
+        }
+        else
+        {
+            Loading loading = GameObject.Find("Loading").GetComponent<Loading>();
+            StartCoroutine(loading.LoadAsynScene(curMap));
+        }
     }
 
     private void HPupdate()
@@ -83,11 +91,10 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
-        Debug.Log("Click");
-        StartCoroutine(FadeOut("Start_Village"));
+        StartCoroutine(FadeOut(0));
     }
 
-    public IEnumerator FadeOut(string sceneName)
+    public IEnumerator FadeOut(int stageid)
     {
         blackScreen.gameObject.SetActive(true);
         float fadeCount = 0;
@@ -101,14 +108,30 @@ public class GameManager : MonoBehaviour
         {
                 HP = playerCs.PlayerCurHP;
         }
-        SceneManager.LoadScene(sceneName);
+        var data = MapManager.GetInstance().LoadData(stageid);
+        if (stageid <= 1)
+        {
+            SceneManager.LoadScene(data[0].MapName);
+        }
+        else
+        {
+            int random = Random.Range(0, data.Length);
+            while (data[random] == null)
+            {
+                random = Random.Range(0, data.Length);
+            }
+            curMap = data[random].MapName;
+            SceneManager.LoadScene("ForestLoading");
+        }
         if (player != null)
             playerCs.NavClear();
         
     }
     IEnumerator FadeIn()
     {
+        
         blackScreen.gameObject.SetActive(true);
+        
         float fadeCount = 1;
         while (fadeCount >= 0)
         {
@@ -116,9 +139,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             blackScreen.color = new Color(0, 0, 0, fadeCount);
         }
-        blackScreen.gameObject.SetActive(false);
         sceneChange = false;
         if (player != null)
             playerCs.NavSet();
+        blackScreen.gameObject.SetActive(false);
+        
     }
 }

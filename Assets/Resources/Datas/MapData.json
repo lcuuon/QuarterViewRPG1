@@ -1,0 +1,17 @@
+[
+  {
+    "Stageid": 0,
+    "Mapid": 1,
+    "MapName": "Loading"
+  },
+  {
+    "Stageid": 1,
+    "Mapid": 2,
+    "MapName": "Start_Village"
+  },
+  {
+    "Stageid": 2,
+    "Mapid": 3,
+    "MapName": "Stage_2-1"
+  }
+]

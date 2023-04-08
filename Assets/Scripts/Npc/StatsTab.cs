@@ -19,8 +19,8 @@ public class StatsTab : MonoBehaviour
     
     [Header("StatTab")]
     [SerializeField] GameObject statTab;
-    [SerializeField] Image pressF;
 
+    PopUpTxt text;
     private PlayerMove player;
     private float[] statPluse = new float[5];
     private int[] reqPoints = new int[5];
@@ -43,6 +43,8 @@ public class StatsTab : MonoBehaviour
         levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
         statPluse[0] = 0;
         statPluse[1] = 0;
+        text = GameObject.Find("PopUptxt").GetComponent<PopUpTxt>();
+
     }
 
     void Update()
@@ -57,6 +59,7 @@ public class StatsTab : MonoBehaviour
             player.isUI = true;
             statTab.SetActive(true);
             Invoke("closeTab", 0.5f);
+            text.TextDown();
         }
         if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Escape))
         {
@@ -65,8 +68,9 @@ public class StatsTab : MonoBehaviour
                 player.isUI = false;
                 statTab.SetActive(false);
                 statTabOpen = false;
+                text.TextUp(0);
             }
-            
+
         }
     }
 
@@ -214,7 +218,6 @@ public class StatsTab : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             iszone = true;
-            pressF.gameObject.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -222,7 +225,6 @@ public class StatsTab : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             iszone = false;
-            pressF.gameObject.SetActive(false);
         }
     }
 

@@ -70,7 +70,7 @@ public class PlayerMove : MonoBehaviour
         {
             nav.SetDestination(transform.position);
         }
-        if (!isDead && !isUI && !gm.sceneChange)
+        if (!isDead && !isUI )
         {
             hpSlider.value = PlayerCurHP;
 
@@ -93,7 +93,7 @@ public class PlayerMove : MonoBehaviour
             }
 
             //Dash
-            if (canDash)
+            if (canDash && !gm.sceneChange)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -128,7 +128,7 @@ public class PlayerMove : MonoBehaviour
             }
 
             //Moveping Control
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && !gm.sceneChange)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -146,7 +146,7 @@ public class PlayerMove : MonoBehaviour
             }
 
             //Player Movement
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1) && !gm.sceneChange)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -163,7 +163,7 @@ public class PlayerMove : MonoBehaviour
             }
 
             //BasicAttack
-            if (canBasicAttack)
+            if (canBasicAttack && !gm.sceneChange)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -210,7 +210,7 @@ public class PlayerMove : MonoBehaviour
     
     private void Death()
     {
-        gm.StartCoroutine(gm.FadeOut("Start_Village"));
+        gm.StartCoroutine(gm.FadeOut(1));
     }
     
     //ErrorFix

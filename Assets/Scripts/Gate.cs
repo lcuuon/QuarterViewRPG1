@@ -7,8 +7,7 @@ public class Gate : MonoBehaviour
 {
     [SerializeField] string SceneName;
     [SerializeField] Vector3 playerPos;
-    [SerializeField] Image image;
-    
+    PopUpTxt text;
 
     GameManager gm;
 
@@ -17,7 +16,7 @@ public class Gate : MonoBehaviour
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        image.gameObject.SetActive(false);
+        text = GameObject.Find("PopUptxt").GetComponent<PopUpTxt>();
     }
 
     void Update()
@@ -27,18 +26,18 @@ public class Gate : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 isin = false;
-                image.gameObject.SetActive(false);
-                gm.StartCoroutine(gm.FadeOut(SceneName));
+                gm.StartCoroutine(gm.FadeOut(2));
+                text.TextDown();
             }
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             isin = true;
-            image.gameObject.SetActive(true);
+            text.TextUp(1);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -46,7 +45,7 @@ public class Gate : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isin = false;
-            image.gameObject.SetActive(false);
+            text.TextDown();
         }
     }
 }

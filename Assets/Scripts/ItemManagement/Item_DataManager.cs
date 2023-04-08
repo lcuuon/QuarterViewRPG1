@@ -29,8 +29,4 @@ public class Item_DataManager
 
         return data;
     }
-
-
-
-
 }

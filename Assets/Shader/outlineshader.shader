@@ -1,54 +1,53 @@
-Shader "Draw/OutlineShader" {
-	Properties{
-		_OutlineColor("Outline Color", Color) = (1,1,1,1)
-		_Outline("Outline width", Range(0, 1)) = .1
-	}
+Shader "Hidden/Custom/Outline"
+{
+    HLSLINCLUDE
+#include "Packages/com.unity.postprocessing/PostProcessing/Shaders/StdLib.hlsl"
+        TEXTURE2D_SAMPLER2D(_MainTex, sampler_MainTex);
+        TEXTURE2D_SAMPLER2D(_CameraDepthTexture, sampler_CameraDepthTexture);
 
-		CGINCLUDE
-#include "UnityCG.cginc"
+        int _thickness;
+        float _transitionSmoothness;
+        float _edge;
+        float4 _color;
 
-		struct appdata {
-		float4 vertex : POSITION;
-		float3 normal : NORMAL;
-	};
+        float4 Frag(VaryingsDefault i) : SV_Target
+        {            
+            
+            float2 ffsoet = _thickness / _ScreenParams;
 
-	struct v2f {
-		float4 pos : POSITION;
-		float4 color : COLOR;
-	};
+            float left = LinearEyeDepth( SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, i.texcoord + float2(-offset.x, 0)).x );
+            float right = LinearEyeDepth( SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, i.texcoord + float2(offset.x, 0)).x );
+            float up = LinearEyeDepth( SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, i.texcoord + float2(0, offset.y)).x );
+            float down = LinearEyeDepth( SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, i.texcoord + float2(0, -offset.y)).x );
 
-	uniform float _Outline;
-	uniform float4 _OutlineColor;
+            float delta = sqrt( pow(right - left, 2) + pow(up - down, 2));
 
-	v2f vert(appdata v) {
-		v2f o;
+            float t = smoothstep(_edge, _edge + _transitionSmoothness, delta);
+            
+            float4 mainTex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord);
 
-		v.vertex *= (1 + _Outline);
+            float4 color = lerp(mainTex, _color, _color.a);
 
-		o.pos = UnityObjectToClipPos(v.vertex);
+            float4 output = lerp(mainTex, color, t);
 
-		o.color = _OutlineColor;
-		return o;
-	}
-	ENDCG
+            return output;
 
-		SubShader{
-			Tags { "DisableBatching" = "True" }
-			Pass {
-				Name "OUTLINE"
-				Tags {"LightMode" = "Always" }
-				Cull Front
-				ZWrite On
-				ColorMask RGB
-				Blend SrcAlpha OneMinusSrcAlpha
 
-				CGPROGRAM
-				#pragma vertex vert
-				#pragma fragment frag
-				half4 frag(v2f i) :COLOR { return i.color; }
-				ENDCG
-			}
-	}
 
-		Fallback "Diffuse"
+           
+        }
+
+        ENDHLSL
+        SubShader
+        {
+            Cull off ZWrite off ZTest Always
+            pass
+            {
+                HLSLPROGRAM
+                #pragma vertex VertDefault
+                #pragma fragment Frag
+                ENDHLSL
+            }
+        }
+    
 }

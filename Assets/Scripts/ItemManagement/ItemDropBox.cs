@@ -5,19 +5,17 @@ using UnityEngine.EventSystems;
 
 public class ItemDropBox : MonoBehaviour
 {
-    private Material outline;
+    [SerializeField] private Material outline;
     private DropTable dt;
 
-    MeshRenderer renderer;
-    Material[] materials;
-
+    MeshRenderer renderers;
+    List<Material> materials = new List<Material>();
 
     void Start()
     {
-        outline = new Material(Shader.Find("Draw/OutlineShader"));
-        renderer = GetComponent<MeshRenderer>();
+        renderers = GetComponent<MeshRenderer>();
         dt = GameObject.Find("DropTable").GetComponent<DropTable>();
-        materials = renderer.sharedMaterials;
+       
     }
 
     void Update()
@@ -27,33 +25,21 @@ public class ItemDropBox : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        Debug.Log("enter");
+        materials.Clear();
+        materials.AddRange(renderers.sharedMaterials);
+        materials.Add(outline);
 
-        for (int i = 0; i < materials.Length; i++)
-        {
-            if (materials[i] == null)
-            {
-                materials[i] = outline;
-                Debug.Log(materials[i].name);
-                break;
-            }
-        }
-
-        renderer.materials = materials;
+        renderers.materials = materials.ToArray();
     }
+
 
     private void OnMouseExit() 
     {
-        for (int i = materials.Length - 1; i > 0; i--)
-        {
-            if (materials[i] != null)
-            {
-                materials[i] = null;
-                break;
-            }
-        }
+        materials.Clear();
+        materials.AddRange(renderers.sharedMaterials);
+        materials.Remove(outline);
 
-        renderer.materials = materials;
+        renderers.materials = materials.ToArray();
     }
 
     private void OnMouseDown()

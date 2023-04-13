@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     PlayerMove playerCs;
     PlayerLevelManager levelManager;
     TMP_Text Hp_Value;
+    UIcanvas canvas;
     private int curHp;
     public bool sceneChange = false;
     private string curMap;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        canvas = GameObject.Find("uicanvas").GetComponent<UIcanvas>();
         levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
         blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
         DontDestroyOnLoad(this.gameObject);
@@ -143,6 +145,6 @@ public class GameManager : MonoBehaviour
         if (player != null)
             playerCs.NavSet();
         blackScreen.gameObject.SetActive(false);
-        
+        canvas.Setup();
     }
 }

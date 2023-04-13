@@ -9,6 +9,11 @@ public class UIcanvas : MonoBehaviour
         DontDestroyOnLoad(this);   
     }
 
+    public void Setup()
+    {
+        gameObject.transform.SetAsLastSibling();
+    }
+
     void Update()
     {
         

@@ -3,7 +3,17 @@ guid: 4a7325011fd1b904d9240d2f0217ee5c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: e95a00c0debbbf940a21a3c105b8c90f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pofa_high_skin_03
+    second: {fileID: 2100000, guid: cd2c7f7be45cbdf44afc68020487e9aa, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

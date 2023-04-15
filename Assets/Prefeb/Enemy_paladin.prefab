@@ -456,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a89b8f4160b134b9c432b1a0ae0890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Damage: 10
 --- !u!1 &1889385832023469574
 GameObject:
@@ -1445,7 +1444,7 @@ MonoBehaviour:
     type: 3}
   hpBarSlider: {fileID: 206255724363132935, guid: 58cb6f10b5acbe8459c6995e063aae0c,
     type: 3}
-  MaxHP: 100
+  MaxHP: 200
   curHP: 0
   Exp: 20
 --- !u!1 &3775214297566393048

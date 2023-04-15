@@ -20,6 +20,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: pofa_high_skin_02
     second: {fileID: 2100000, guid: b52a052821ca2dc459eee363d254f03f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pofa_high_skin_03
+    second: {fileID: 2100000, guid: 5a36ac2cf04558440a7c56c8b451eb07, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

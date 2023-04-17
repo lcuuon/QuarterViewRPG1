@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class EnemyArcher : MonoBehaviour
     public bool isAggro;
     public bool isAttack;
     private bool canMove;
-    
+
 
     //Component
     public GameObject player;
@@ -43,7 +44,8 @@ public class EnemyArcher : MonoBehaviour
     private float rotyPlayer;
     private float rotxTarget;
     private float rotyTarget;
-    
+    private Vector3 arrowSet;
+
 
     void Start()
     {
@@ -94,13 +96,13 @@ public class EnemyArcher : MonoBehaviour
                         {
                             rotxTarget = (Mathf.Cos((rotyPlayer - 90) * (Mathf.PI / 180)) * des) + transform.position.x;
                             rotyTarget = (Mathf.Sin((rotyPlayer - 90) * (Mathf.PI / 180)) * des) + transform.position.z;
-                        }                   
+                        }
                     }
                     else
                     {
                         rotxTarget = (Mathf.Cos((rotxPlayer - 90) * (Mathf.PI / 180)) * des) + transform.position.x;
                         rotyTarget = (Mathf.Sin((rotxPlayer - 90) * (Mathf.PI / 180)) * des) + transform.position.z;
-                    }                  
+                    }
                     transform.LookAt(new Vector3(rotxTarget, transform.position.y, rotyTarget));
                     anim.SetBool("isAttack", true);
                     anim.SetBool("isRun", false);
@@ -125,18 +127,20 @@ public class EnemyArcher : MonoBehaviour
             if (isknockback)
             {
                 nav.SetDestination(transform.position);
-
             }
         }
     }
 
-    //Attack
-
+    //Attack    
     private void Shoot()
     {
         var arrow = ArrowPooling.GetObject();
-        arrow.transform.position = transform.position;
-        arrow.Shoot(new Quaternion(transform.rotation.x, transform.rotation.y + 90, transform.rotation.z, 0));       
+        arrow.transform.position = transform.position + new Vector3(0, 3f, 0);
+        arrow.Shoot(player.transform.position, arrowSet);       
+    }
+    private void Set()
+    {
+        arrowSet = transform.localRotation.eulerAngles;
     }
 
     //Death

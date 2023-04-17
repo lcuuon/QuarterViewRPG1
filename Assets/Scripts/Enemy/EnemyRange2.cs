@@ -22,7 +22,6 @@ public class EnemyRange2 : MonoBehaviour
         {
             if (this.gameObject.name == "AttackRange")
             {
-                //Debug.Log(other.name);
                 enemy.player = other.gameObject;
                 enemy.isAttack = true;
                 enemy.isAggro = false;
@@ -30,8 +29,7 @@ public class EnemyRange2 : MonoBehaviour
             else if (this.gameObject.name == "aggroRange")
             {
                 if (!enemy.isAttack)
-                {
-                    //Debug.Log(other.name);
+                { 
                     enemy.player = other.gameObject;
                     enemy.isAggro = true;
                 }

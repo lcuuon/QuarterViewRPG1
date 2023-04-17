@@ -6,6 +6,7 @@ using UnityEngine;
 public class AttackInfo : MonoBehaviour
 {
     Enemy enemy;
+    EnemyArcher Aenemy;
     Rigidbody enemyrb;
     PlayerMove player;
     PlayerLevelManager levelManager;
@@ -53,8 +54,18 @@ public class AttackInfo : MonoBehaviour
         {
             //Debug.Log("Damage");
             enemy = other.GetComponent<Enemy>();
-            enemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
-            enemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
+            if (enemy == null)
+            {
+                Debug.Log("aa");
+                Aenemy = other.GetComponent<EnemyArcher>();
+                Aenemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
+                Aenemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
+            }
+            else
+            {
+                enemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
+                enemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
+            }           
         }
     }
 }

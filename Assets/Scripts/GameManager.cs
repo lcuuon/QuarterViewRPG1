@@ -8,7 +8,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-
+    [SerializeField] OverlapCheck overlap;
     private Image blackScreen;
     GameObject player;
     PlayerMove playerCs;
@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
         var data = MapManager.GetInstance().LoadData(stageid);
         if (stageid <= 1)
         {
+            Debug.Log(data.Length);
             SceneManager.LoadScene(data[0].MapName);
         }
         else
@@ -146,5 +147,6 @@ public class GameManager : MonoBehaviour
             playerCs.NavSet();
         blackScreen.gameObject.SetActive(false);
         canvas.Setup();
+        overlap.overlapCheck();
     }
 }

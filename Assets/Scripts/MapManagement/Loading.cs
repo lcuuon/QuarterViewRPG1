@@ -14,7 +14,6 @@ public class Loading : MonoBehaviour
     {
         yield return null;
         startTime = Time.time;
-        Debug.Log("loadStart");
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
 
         operation.allowSceneActivation = false;
@@ -22,12 +21,10 @@ public class Loading : MonoBehaviour
         while (!operation.isDone)
         {
             curTime = Time.time;
-            Debug.Log(curTime - startTime);
 
             slider.value = (curTime - startTime) / 2f;
             if (curTime - startTime > 2)
             {
-                Debug.Log("loadEnd");
                 operation.allowSceneActivation = true;
             }
             yield return null;

@@ -1166,6 +1166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ea20fe9a7aab94caff98c6220e6418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlap: {fileID: 1831185708}
   sceneChange: 0
   HP: 100
 --- !u!4 &142439692
@@ -14524,6 +14525,7 @@ GameObject:
   - component: {fileID: 1488835256}
   - component: {fileID: 1488835255}
   - component: {fileID: 1488835254}
+  - component: {fileID: 1488835259}
   m_Layer: 5
   m_Name: uicanvas
   m_TagString: Untagged
@@ -14629,6 +14631,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1488835259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488835253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86427a645b43c141a33665889353715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamagedText: {fileID: 8478283926986071315, guid: 4f2c3deda4134ef46a48f40847ea7e43,
+    type: 3}
+  ExpText: {fileID: 5232263522694088088, guid: fc3f739a2de40c445b97623d2b6ee5e6, type: 3}
 --- !u!1001 &1493508606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17256,6 +17273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831185706}
   - component: {fileID: 1831185707}
+  - component: {fileID: 1831185708}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -17290,6 +17308,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94e67eee631800746b89eba743069938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1831185708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831185705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d40d75cafdad3a43bf25dda425f0ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1833975942

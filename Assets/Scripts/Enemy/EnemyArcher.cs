@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -158,6 +159,11 @@ public class EnemyArcher : MonoBehaviour
         anim.CrossFade("Death", 0f);
         Invoke("Destroy", 15f);
         levelManager.CurExp += Exp;
+        var ExpText = DamagedTextPool.GetExp();
+        var ExpTextValue = ExpText.GetComponent<TMP_Text>();
+        var ExpTextCs = ExpText.GetComponent<GetExpText>();
+        ExpTextCs.Death(this.transform.position);
+        ExpTextValue.text = ($"<b>+{Exp}</b> ½ºÅÝÆ÷ÀÎÆ®");
     }
 
     private void Destroy()
@@ -205,6 +211,28 @@ public class EnemyArcher : MonoBehaviour
         isknockback = false;
         rb.velocity = Vector3.zero;
         anim.SetBool("canMove", true);
+    }
+    public void DamageText(float Value, bool isCritical)
+    {
+        var DamagedText = DamagedTextPool.GetDamaged();
+        var DamagedTextValue = DamagedText.GetComponent<TMP_Text>();
+        var DamagedTextCs = DamagedText.GetComponent<DamageTxt>();
+        DamagedTextCs.Damaged(this.transform.position);
+
+        if (isCritical)
+        {
+            DamagedTextValue.fontSize = 57;
+            DamagedTextValue.color = Color.red;
+            DamagedTextValue.text = ($"<b>-{Value}</b>");
+        }
+        else
+        {
+            DamagedTextValue.fontSize = 47;
+            DamagedTextValue.color = Color.white;
+            DamagedTextValue.text = ($"-{Value}");
+        }
+
+
     }
 
     //Collision

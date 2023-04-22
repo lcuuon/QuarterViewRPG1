@@ -45,8 +45,8 @@ public class PlayerMove : MonoBehaviour
     //MoveLimit
     public bool canMove;
 
-    
-    
+
+
 
     void Start()
     {
@@ -70,7 +70,7 @@ public class PlayerMove : MonoBehaviour
         {
             nav.SetDestination(transform.position);
         }
-        if (!isDead && !isUI )
+        if (!isDead && !isUI)
         {
             hpSlider.value = PlayerCurHP;
 
@@ -194,10 +194,12 @@ public class PlayerMove : MonoBehaviour
                         }
                     }
                 }
-                
+
             }
-        }    
+        }
     }
+
+    
 
     public void NavSet()
     {

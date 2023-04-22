@@ -15,7 +15,7 @@ public class ArrowPooling : MonoBehaviour
     {
         Instance = this;
 
-        Initialize(10);
+        //Initialize(10);
     }
 
     private void Initialize(int initCount)
@@ -45,6 +45,7 @@ public class ArrowPooling : MonoBehaviour
         }
         else
         {
+            Debug.Log("Create");
             var newObj = Instance.CreateNewObject();
             newObj.gameObject.SetActive(true);
             newObj.transform.SetParent(null);

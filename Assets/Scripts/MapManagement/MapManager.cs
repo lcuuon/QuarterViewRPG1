@@ -25,12 +25,15 @@ public class MapManager : MonoBehaviour
         var json = Resources.Load<TextAsset>("Datas/MapData").text;
         var array = JsonConvert.DeserializeObject<MapData[]>(json);
         MapData[] data = new MapData[array.Length];
-        
+        int j = 0;
+
         for (int i = 0; i < array.Length; i++)
         {
             if (array[i].Stageid == stageid)
             {
-                data[i] = array[i];
+                data[j] = array[i];
+                Debug.Log(array[i].MapName);
+                j++;
             }
         }
         return data;

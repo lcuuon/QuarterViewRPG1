@@ -17,6 +17,8 @@ public class AttackInfo : MonoBehaviour
     [SerializeField] float KnockbackRange;
     [SerializeField] float SternTime;
 
+    private bool _isCritical = false;
+
     void Start()
     {
         levelManager = GameObject.Find("PlayerCurState").GetComponent<PlayerLevelManager>();
@@ -32,19 +34,20 @@ public class AttackInfo : MonoBehaviour
     {
         if (levelManager.criticalProb > 0)
         {
-            int CriCheck = Random.RandomRange(1, 100);
+            int CriCheck = Random.Range(1, 100);
             bool isCritical = (CriCheck <= levelManager.criticalProb);
             if (isCritical)
             {
                 Debug.Log("Critical!");
+                _isCritical = true;
                 return levelManager.criticalDmg;
             }
         }
         else
         {
+            _isCritical = false;
             return 0;
         }
-
         return 0;
     }
 
@@ -52,20 +55,25 @@ public class AttackInfo : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            //Debug.Log("Damage");
             enemy = other.GetComponent<Enemy>();
             if (enemy == null)
             {
-                Debug.Log("aa");
                 Aenemy = other.GetComponent<EnemyArcher>();
                 Aenemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
-                Aenemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
+                float Damage = SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
+                Aenemy.curHP -= Damage;
+                Aenemy.DamageText(Damage, _isCritical);
+                _isCritical = false;
             }
             else
             {
                 enemy.Knockback(player.gameObject.transform.localRotation * Vector3.forward * KnockbackRange);
-                enemy.curHP -= SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
-            }           
+                float Damage = SkillDamage + SkillCoefficient * levelManager.AtkDamage + CriticalProbCal();
+                enemy.curHP -= Damage;
+                enemy.DamageText(Damage, _isCritical);
+                _isCritical = false;
+
+            }
         }
     }
 }

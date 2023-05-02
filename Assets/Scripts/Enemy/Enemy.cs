@@ -128,7 +128,7 @@ public class Enemy : MonoBehaviour
         var ExpTextValue = ExpText.GetComponent<TMP_Text>();
         var ExpTextCs = ExpText.GetComponent<GetExpText>();
         ExpTextCs.Death(this.transform.position);
-        ExpTextValue.text = ($"<b>+{Exp}</b> 스텟포인트");
+        ExpTextValue.text = ($"<b>+{Exp}</b> 경험치");
     }
 
     private void Destroy()

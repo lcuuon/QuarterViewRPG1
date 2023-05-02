@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private int curHp;
     public bool sceneChange = false;
     private string curMap;
+    Gate gate;
 
     [SerializeField] private float HP;
 
@@ -67,11 +68,16 @@ public class GameManager : MonoBehaviour
             if (scene.name == "Start_Village")
             {
                 playerCs.PlayerCurHP = levelManager.MaxHP;
+                var overlapcheck = GameObject.Find("GameManager");
+                if (overlapcheck != this.gameObject)
+                {
+                    Destroy(overlapcheck);
+                }
             }
             else
             {
                 sceneChange = true;
-                Invoke("HPupdate", 0.1f);
+                //Invoke("HPupdate", 0.1f);
             }
         }
         if (scene.name != "ForestLoading")
@@ -81,8 +87,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Loading loading = GameObject.Find("Loading").GetComponent<Loading>();
-            StartCoroutine(loading.LoadAsynScene(curMap));
+            if (this.gameObject != null)
+            {
+                Debug.Log(curMap);
+                Loading loading = GameObject.Find("Loading").GetComponent<Loading>();
+                StartCoroutine(loading.LoadAsynScene(curMap));
+            }
+            
         }
     }
 
@@ -142,11 +153,24 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             blackScreen.color = new Color(0, 0, 0, fadeCount);
         }
-        sceneChange = false;
         if (player != null)
             playerCs.NavSet();
         blackScreen.gameObject.SetActive(false);
         canvas.Setup();
         overlap.overlapCheck();
+        sceneChange = false;
+        gateReset();
+    }
+
+    void gateReset()
+    {
+        if (GameObject.Find("Gate") != null)
+        {
+            gate = GameObject.Find("Gate").GetComponent<Gate>();
+        }
+        if (gate != null)
+        {
+            gate.gm = this.GetComponent<GameManager>();
+        }
     }
 }

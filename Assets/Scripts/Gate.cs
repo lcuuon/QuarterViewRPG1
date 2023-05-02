@@ -9,7 +9,7 @@ public class Gate : MonoBehaviour
     [SerializeField] Vector3 playerPos;
     PopUpTxt text;
 
-    GameManager gm;
+    public GameManager gm;
 
     private bool isin;
 
@@ -21,6 +21,10 @@ public class Gate : MonoBehaviour
 
     void Update()
     {
+        if (gm.sceneChange)
+        {
+            gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
         if (isin)
         {
             if (Input.GetKeyDown(KeyCode.F))
